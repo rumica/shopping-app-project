@@ -9,6 +9,7 @@ export const ProductProvider = ({ children }) => {
     const [basket, setBasket] = useState([])
     const [initialState, setInitialState] = useState(0)
     const [total, setTotal] = useState(0)
+    const [quantity, setQuantity] = useState(0)
 
     
     useEffect(() => {
@@ -24,15 +25,14 @@ export const ProductProvider = ({ children }) => {
     
         fetchData();
       }, []);
-      
 
       const addToBasket = (title, price, id) => {
         setBasket((prev) => [...prev, { title, price, id }])
-        setInitialState(initialState + 1)
-        
+        setTotal(basket.reduce((acc, product) => {
+          return acc + product.price;
+      }, 0)) 
+        setInitialState(initialState + 1)    
       }
-
-      
 
   return (
     <ProductContext.Provider value={{ total, setTotal, addToBasket, product, initialState, setInitialState, setProduct, basket, setBasket}}>
