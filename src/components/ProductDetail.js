@@ -24,8 +24,6 @@ const ProductDetail = () => {
     fetchData();
   }, []);
 
-  console.log(product)
-
   return (
     <div>
       <Navbar />

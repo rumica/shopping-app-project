@@ -1,21 +1,29 @@
 import React, { useContext, useState } from 'react'
 import '../style.css'
 import { ProductContext } from '../contexts/ProductContext'
+import { BasketContext } from '../contexts/BasketContext'
 import Navbar from './Navbar'
 
 const Basket = () => {
   
-  const { basket, setBasket, initialState, setInitialState, total, setTotal} = useContext(ProductContext)
+  const { product } = useContext(ProductContext)
+  const { basket, setBasket, initialState, setInitialState, total, setTotal, quantity, setQuantity } = useContext(BasketContext)
 
-  const addItem = (title, price, id) => {
+  const basketProductID = basket.map((item) => item.id)
+  console.log(basketProductID)
+
+  const addItem = (title, price, id, quantity) => {
     setBasket((prev) => [...prev, { title, price, id }])
     setInitialState(initialState + 1)
   }
 
+
   const deleteItem = (id) => {
-   setBasket(basket.filter(item => item.id !== id))
    if(basket === []) {
     setInitialState(0)
+    setTotal(0)
+   } else {
+    setBasket(basket.filter(item => item.id !== id))
    }
   }
 
@@ -29,11 +37,11 @@ const Basket = () => {
         {basket.map((item, index) => (
           <div className='basket-cart' key={index}>
             <div>
-                <h1>{item.title}</h1>
+                <h1>{item.title} <span>{quantity}</span></h1>
                 <h2>${item.price}</h2>
               </div>
               <div>
-                <button onClick={() => addItem(item.title, item.price, item.id)}>+</button>
+                <button onClick={() => addItem(item.title, item.price, item.id, item.quantity)}>+</button>
                 <button onClick={() => deleteItem(item.id)}>-</button>
               </div>
           </div>

@@ -1,11 +1,13 @@
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ProductContext } from '../contexts/ProductContext'
+import { BasketContext } from '../contexts/BasketContext'
 import '../style.css'
 
 const Product = () => {
 
-  const { product, addToBasket } = useContext(ProductContext)
+  const { product } = useContext(ProductContext)
+  const { addToBasket, quantity } = useContext(BasketContext)
   console.log(product)
 
   return (
